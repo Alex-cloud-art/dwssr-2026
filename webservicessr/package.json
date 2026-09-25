@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": { 
     "greet": "echo 'Hola mundo'",
-    "start": "DEBUG=webservicessr:* node ./bin/www"
+    "start": " node ./bin/www",
+    "dev": "DEBUG=webservicessr:* node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

@@ -3,6 +3,7 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import createDebug from 'debug';
 import { fileURLToPath } from 'url';
 
 import indexRouter from './routes/index.js';
@@ -12,7 +13,10 @@ import usersRouter from './routes/users.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const debug = createDebug('webservicessr:server');
+
 const app = express();
+debug('✨ Creando backend');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -21,8 +25,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+debug('📁 Creando servidor de Archivos Estáticos');
 app.use(express.static(path.join(__dirname, 'public')));
 
+debug('🔀 Registrando rutas');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
