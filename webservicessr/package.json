@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "greet": "echo 'Hola mundo'",
-    "start": " node ./bin/www",
-    "dev": "DEBUG=webservicessr:* nodemon ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "DEBUG=webservicessr:* nodemon ./bin/www",
+    "vite": "vite",
+    "build": "vite build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -19,5 +21,9 @@
   "devDependencies": {
     "nodemon": "^3.1.14",
     "vite": "^8.3.2"
+  },
+  "imports": {
+    "#routes/*": "./routes/*",
+    "#lib/*": "./lib/*"
   }
 }

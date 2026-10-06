@@ -4,10 +4,12 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import createDebug from 'debug';
+import hbs from 'hbs';
 import { fileURLToPath } from 'url';
 
-import indexRouter from './routes/index.js';
-import usersRouter from './routes/users.js';
+import indexRouter from '#routes/index.js';
+import usersRouter from '#routes/users.js';
+import { viteAssets } from '#lib/vite.js';
 
 // __dirname no existe por defecto en ES modules, hay que recrearlo
 const __filename = fileURLToPath(import.meta.url);
@@ -21,6 +23,9 @@ debug('✨ Creando backend');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+// Registramos el helper para usar {{{viteAssets}}} en las vistas
+hbs.registerHelper('viteAssets', viteAssets);
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,16 +33,18 @@ app.use(cookieParser());
 
 debug('📁 Creando servidor de Archivos Estáticos');
 app.use(express.static(path.join(__dirname, 'public')));
+// Archivos compilados por Vite (producción)
+app.use(express.static(path.join(__dirname, 'dist')));
 
 debug('🔀 Registrando rutas');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
