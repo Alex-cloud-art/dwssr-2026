@@ -4,10 +4,12 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import createDebug from 'debug';
+import hbs from 'hbs';
 import { fileURLToPath } from 'url';
 
 import indexRouter from '#routes/index.js';
 import usersRouter from '#routes/users.js';
+import { registerViteHelper } from '#lib/vite.js';
 
 // __dirname no existe por defecto en ES modules, hay que recrearlo
 const __filename = fileURLToPath(import.meta.url);
@@ -20,11 +22,18 @@ debug('✨ Creando backend');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+// registrando el helper viteAssets
+registerViteHelper(hbs);
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// archivos estaticos compilados por vite (solo produccion)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'dist')));
+}
 
 debug('📁 Creando servidor de Archivos Estáticos');
 app.use(express.static(path.join(__dirname, 'public')));

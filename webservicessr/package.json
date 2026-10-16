@@ -5,8 +5,12 @@
   "type": "module",
   "scripts": {
     "greet": "echo 'Hola mundo'",
-    "start": " node ./bin/www",
-    "dev": "DEBUG=webservicessr:* nodemon ./bin/www"
+    "start": "NODE_ENV=production node ./bin/www",
+    "dev": "DEBUG=webservicessr:* nodemon ./bin/www",
+    "dev:vite": "vite",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:vite\"",
+    "build": "vite build",
+    "preview": "npm run build && npm start"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -17,6 +21,7 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "concurrently": "^10.0.6",
     "nodemon": "^3.1.14",
     "vite": "^8.3.4"
   },

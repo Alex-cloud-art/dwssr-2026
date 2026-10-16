@@ -34,5 +34,38 @@ export function viteAssets() {
     return '';
   }
 
-  return '';
+  // leyendo y parseando el manifiesto que genera vite en la compilacion
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  // punto de entrada del front-end
+  const mainEntry = manifest['main.js'];
+
+  // guarda por si main.js no esta en el manifiesto
+  if (!mainEntry) {
+    console.warn('El archivo main.js no esta disponible en el manifiesto de vite');
+    return '';
+  }
+
+  let tags = '';
+
+  // archivos css
+  if (mainEntry.css) {
+    mainEntry.css.forEach((cssFile) => {
+      tags += `<link rel="stylesheet" href="/${cssFile}">\n`;
+    });
+  }
+
+  // archivo js
+  tags += `<script type="module" src="/${mainEntry.file}" defer></script>`;
+
+  return tags;
+}
+
+/**
+ * Registra el helper viteAssets en handlebars
+ */
+export function registerViteHelper(hbs) {
+  hbs.registerHelper('viteAssets', () => {
+    // sanitizando la salida del helper
+    return new hbs.SafeString(viteAssets());
+  });
 }
