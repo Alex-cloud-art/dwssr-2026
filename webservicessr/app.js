@@ -6,8 +6,8 @@ import logger from 'morgan';
 import createDebug from 'debug';
 import { fileURLToPath } from 'url';
 
-import indexRouter from './routes/index.js';
-import usersRouter from './routes/users.js';
+import indexRouter from '#routes/index.js';
+import usersRouter from '#routes/users.js';
 
 // __dirname no existe por defecto en ES modules, hay que recrearlo
 const __filename = fileURLToPath(import.meta.url);
