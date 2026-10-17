@@ -14,6 +14,12 @@ export default defineConfig({
     port: 5173,
     // si el puerto esta ocupado no cambia a otro
     strictPort: true,
+    // permite conexiones externas en el entorno de red
+    host: true,
+    // permite peticiones desde los dominios de Codespaces
+    allowedHosts: true,
+    // habilita CORS para permitir solicitudes desde Express
+    cors: true,
   },
   // configurando build
   build: {

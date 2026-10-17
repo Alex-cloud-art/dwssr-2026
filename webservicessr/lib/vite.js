@@ -17,7 +17,12 @@ export function viteAssets() {
   // obtener modo de ejecucion
   const isDev = process.env.NODE_ENV !== 'production';
   // url del servidor de desarrollo de vite
-  const viteDevServer = process.env.VITE_SERVER || 'http://localhost:5173';
+  // en Codespaces vite se alcanza por una url publica con el puerto 5173
+  const codespace = process.env.CODESPACE_NAME;
+  const dominio = process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN || 'app.github.dev';
+  const viteDevServer =
+    process.env.VITE_SERVER ||
+    (codespace ? `https://${codespace}-5173.${dominio}` : 'http://localhost:5173');
 
   if (isDev) {
     // en desarrollo cargamos los archivos del front-end directo del servidor de vite
