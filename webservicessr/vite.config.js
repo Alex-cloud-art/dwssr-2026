@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 // importando rutas
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+// importando tailwind
+import tailwindcss from '@tailwindcss/vite';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -9,6 +11,8 @@ const __dirname = dirname(__filename);
 export default defineConfig({
   // carpeta donde viven los archivos del front-end
   root: 'src',
+  // agregando a vite el plugin de tailwind
+  plugins: [tailwindcss()],
   server: {
     // puerto de escucha del servidor de desarrollo
     port: 5173,
