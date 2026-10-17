@@ -10,7 +10,9 @@
     "dev:vite": "vite",
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:vite\"",
     "build": "vite build",
-    "preview": "npm run build && npm start"
+    "preview": "npm run build && npm start",
+    "lint:back": "eslint \"app.js\" \"routes/**/*.js\"",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
