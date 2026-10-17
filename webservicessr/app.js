@@ -53,4 +53,14 @@ app.use(function(err, req, res, _next) {
   res.render('error');
 });
 
+// ejemplo de codigo inalcanzable
+//(()=>{
+//  let age=10
+//
+//  if (age< 10) {
+//    console.log("age is less than 10")
+//  }
+//  return age
+//})()
+
 export default app;
