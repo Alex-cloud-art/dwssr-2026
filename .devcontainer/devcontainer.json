@@ -18,6 +18,14 @@
 				"mongodb.mongodb-vscode"
 			]
 		}
+	},
+
+	"portsAttributes": {
+		"5173": {
+			"label": "Vite Dev Server",
+			"onAutoForward": "notify",
+			"visibility": "public"
+		}
 	}
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
