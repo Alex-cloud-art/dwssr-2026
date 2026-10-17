@@ -1,3 +1,12 @@
 @import 'tailwindcss';
 /* linea que informa a tailwind donde estan las vistas de nuestra app */
 @source '../../views/**/*.hbs';
+
+p {
+  margin-top: 20px;
+}
+
+body {
+  padding: 50px;
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
