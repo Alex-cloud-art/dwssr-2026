@@ -22,6 +22,9 @@ export default defineConfig([
         ...globals.node,
       },
     },
+    rules: {
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
   },
   // 2.1) Config de Vite
   {
