@@ -1,11 +1,11 @@
 import createError from 'http-errors';
 import express from 'express';
-import path from 'path';
+import path from 'node:path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import createDebug from 'debug';
 import hbs from 'hbs';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'node:url';
 
 import indexRouter from '#routes/index.js';
 import usersRouter from '#routes/users.js';
@@ -42,11 +42,11 @@ debug('🔀 Registrando rutas');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
-app.use(function(err, req, res, _next) {
+app.use((err, req, res, _next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
@@ -54,13 +54,13 @@ app.use(function(err, req, res, _next) {
 });
 
 // ejemplo de codigo inalcanzable
-//(()=>{
+// (()=>{
 //  let age=10
 //
 //  if (age< 10) {
 //    console.log("age is less than 10")
 //  }
 //  return age
-//})()
+// })()
 
 export default app;

@@ -20,9 +20,8 @@ export function viteAssets() {
   // en Codespaces vite se alcanza por una url publica con el puerto 5173
   const codespace = process.env.CODESPACE_NAME;
   const dominio = process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN || 'app.github.dev';
-  const viteDevServer =
-    process.env.VITE_SERVER ||
-    (codespace ? `https://${codespace}-5173.${dominio}` : 'http://localhost:5173');
+  const viteDevServer = process.env.VITE_SERVER
+    || (codespace ? `https://${codespace}-5173.${dominio}` : 'http://localhost:5173');
 
   if (isDev) {
     // en desarrollo cargamos los archivos del front-end directo del servidor de vite
@@ -69,8 +68,6 @@ export function viteAssets() {
  * Registra el helper viteAssets en handlebars
  */
 export function registerViteHelper(hbs) {
-  hbs.registerHelper('viteAssets', () => {
-    // sanitizando la salida del helper
-    return new hbs.SafeString(viteAssets());
-  });
+  // sanitizando la salida del helper
+  hbs.registerHelper('viteAssets', () => new hbs.SafeString(viteAssets()));
 }
