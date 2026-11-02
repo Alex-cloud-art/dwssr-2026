@@ -1,9 +1,8 @@
-import winstonLogger from './lib/winston.js';
 import createError from 'http-errors';
 import express from 'express';
 import path from 'node:path';
 import cookieParser from 'cookie-parser';
-import logger from 'morgan';
+import morgan from 'morgan';
 import createDebug from 'debug';
 import hbs from 'hbs';
 import { fileURLToPath } from 'node:url';
@@ -19,7 +18,6 @@ const __dirname = path.dirname(__filename);
 const debug = createDebug('webservicessr:server');
 
 const app = express();
-winstonLogger.info('Aplicación iniciada');
 debug('✨ Creando backend');
 
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +25,7 @@ app.set('view engine', 'hbs');
 // registrando el helper viteAssets
 registerViteHelper(hbs);
 
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
