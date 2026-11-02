@@ -1,3 +1,4 @@
+import winstonLogger from './lib/winston.js';
 import createError from 'http-errors';
 import express from 'express';
 import path from 'node:path';
@@ -18,6 +19,7 @@ const __dirname = path.dirname(__filename);
 const debug = createDebug('webservicessr:server');
 
 const app = express();
+winstonLogger.info('Aplicación iniciada');
 debug('✨ Creando backend');
 
 app.set('views', path.join(__dirname, 'views'));
