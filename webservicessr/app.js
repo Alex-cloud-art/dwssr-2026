@@ -4,12 +4,11 @@ import path from 'node:path';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import createDebug from 'debug';
-import hbs from 'hbs';
+import configureHandlebars from './lib/handlebars.js';
 import { fileURLToPath } from 'node:url';
 
 import indexRouter from '#routes/index.js';
 import usersRouter from '#routes/users.js';
-import { registerViteHelper } from '#lib/vite.js';
 
 // __dirname no existe por defecto en ES modules, hay que recrearlo
 const __filename = fileURLToPath(import.meta.url);
@@ -20,10 +19,7 @@ const debug = createDebug('webservicessr:server');
 const app = express();
 debug('✨ Creando backend');
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-// registrando el helper viteAssets
-registerViteHelper(hbs);
+configureHandlebars(app);
 
 app.use(morgan('dev'));
 app.use(express.json());
