@@ -1,9 +1,9 @@
 import createError from 'http-errors';
 import express from 'express';
+import logger from './lib/winston.js';
 import path from 'node:path';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import createDebug from 'debug';
 import configureHandlebars from './lib/handlebars.js';
 import { fileURLToPath } from 'node:url';
 
@@ -14,14 +14,15 @@ import usersRouter from '#routes/users.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const debug = createDebug('webservicessr:server');
 
 const app = express();
-debug('✨ Creando backend');
+logger.debug('✨ Creando backend');
 
 configureHandlebars(app);
 
-app.use(morgan('dev'));
+app.use(morgan('dev', {
+  stream: { write: (message) => logger.info(message.trim()) },
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -31,10 +32,10 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'dist')));
 }
 
-debug('📁 Creando servidor de Archivos Estáticos');
+logger.debug('📁 Creando servidor de Archivos Estáticos');
 app.use(express.static(path.join(__dirname, 'public')));
 
-debug('🔀 Registrando rutas');
+logger.debug('🔀 Registrando rutas');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

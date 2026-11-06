@@ -36,7 +36,7 @@ const myConsoleFormat = combine(
   label({ label: '🔔: ' }),
   timestamp({ format: 'DD-MM-YYYY HH:mm:ss' }),
   printf(
-    (info) => `${info.label}${info.timestamp} ${info.level}: ${info.message}`,
+    (info) => `${info.level} ▸ ${info.label} ▸ ${info.timestamp} ▸ ${info.message}`,
   ),
 );
 
